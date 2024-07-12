@@ -31,7 +31,7 @@ namespace UnityEditor.CSV2UnityMesh
 
         
 
-        private string m_outFilePath = "Assets/CSV2Mesh/";
+        private string m_outFilePath = "Assets/CSV2UnityMesh/";
         private string m_outFileName = "outfile.fbx";
 
         private static readonly GUID debugShaderGUID = new GUID("86e38963fcf6c9d47952280214f1d1c1");
@@ -64,7 +64,7 @@ namespace UnityEditor.CSV2UnityMesh
         }
         public MaterialOutputChannel m_materialOutputChannel = (MaterialOutputChannel)7;
 
-        [MenuItem("Tools/CSV2Mesh")]
+        [MenuItem("Tools/CSV2UnityMesh")]
         public static void ShowWindow()
         {
             var window = EditorWindow.GetWindow(typeof(CSV2UnityMesh));
@@ -117,17 +117,17 @@ namespace UnityEditor.CSV2UnityMesh
             EditorGUILayout.BeginVertical();
 
             EditorGUILayout.BeginHorizontal();
-            positionColumnID    = EditorGUILayout.Popup(Styles.positionStr, positionColumnID , m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(200));
+            positionColumnID    = EditorGUILayout.Popup(Styles.positionStr, positionColumnID , m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(250));
             GUILayout.FlexibleSpace(); modelScale = EditorGUILayout.FloatField(Styles.scale, modelScale, GUILayout.Width(150));
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            normalColumnID      = EditorGUILayout.Popup(Styles.normalStr, normalColumnID    , m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(200));
+            normalColumnID      = EditorGUILayout.Popup(Styles.normalStr, normalColumnID    , m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(250));
             GUILayout.FlexibleSpace(); flipNormals = EditorGUILayout.Toggle(Styles.flipNormal, flipNormals, GUILayout.Width(150));
             EditorGUILayout.EndHorizontal();
 
-            tangentColumnID     = EditorGUILayout.Popup(Styles.tangentStr, tangentColumnID  , m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(200));
-            colorColumnID       = EditorGUILayout.Popup(Styles.colorStr, colorColumnID      , m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(200));
+            tangentColumnID     = EditorGUILayout.Popup(Styles.tangentStr, tangentColumnID  , m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(250));
+            colorColumnID       = EditorGUILayout.Popup(Styles.colorStr, colorColumnID      , m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(250));
 
             
             for (int ti = 0; ti < texcoordColumnID.Length; ti++)
@@ -135,13 +135,13 @@ namespace UnityEditor.CSV2UnityMesh
                 EditorGUILayout.BeginHorizontal();
                 if (enableTexcoord[ti])
                 {
-                    texcoordColumnID[ti] = EditorGUILayout.Popup(Styles.texcoordStr + ti + ":", texcoordColumnID[ti], m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(200));
+                    texcoordColumnID[ti] = EditorGUILayout.Popup(Styles.texcoordStr + ti + ":", texcoordColumnID[ti], m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(250));
                 }
                 else
                 {
                     var tempEnable = GUI.enabled;
                     GUI.enabled = false;
-                    texcoordColumnID[ti] = EditorGUILayout.Popup(Styles.texcoordStr + ti + ":", texcoordColumnID[ti], m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(200));
+                    texcoordColumnID[ti] = EditorGUILayout.Popup(Styles.texcoordStr + ti + ":", texcoordColumnID[ti], m_columnHeadsArray, EditorStyles.popup, GUILayout.Width(250));
                     GUI.enabled = tempEnable;
                 }
                     
