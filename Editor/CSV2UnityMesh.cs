@@ -51,7 +51,11 @@ namespace UnityEditor.CSV2UnityMesh
             Normal,
             Tangent,
             VertexColor,
-            UV
+            Texcoord0,
+            Texcoord1,
+            Texcoord2,
+            Texcoord3,
+            Texcoord4
         }
         public MaterialDebugMode m_materialDebugMode;
         public enum MaterialOutputChannel
@@ -165,6 +169,7 @@ namespace UnityEditor.CSV2UnityMesh
                 // Handle mouse events for rotation
                 HandleMouseEvents(previewRect);
 
+
                 previewRenderUtility.BeginPreview(previewRect, GUIStyle.none);
 
                 // Configure the camera and render the mesh
@@ -174,8 +179,10 @@ namespace UnityEditor.CSV2UnityMesh
                 previewRenderUtility.DrawMesh(targetMesh, trs, debugMaterial, 0);
                 previewRenderUtility.camera.Render();
 
-                Texture resultRender = previewRenderUtility.EndPreview();
-                GUI.DrawTexture(previewRect, resultRender, ScaleMode.StretchToFill, false);
+                //Texture resultRender = previewRenderUtility.EndPreview();
+                //GUI.DrawTexture(previewRect, resultRender, ScaleMode.StretchToFill, false);
+
+                previewRenderUtility.EndAndDrawPreview(previewRect);
             }
             GUILayout.Space(10);
             EditorGUILayout.BeginHorizontal();
@@ -673,10 +680,6 @@ namespace UnityEditor.CSV2UnityMesh
             }
         }
 
-        private void Update()
-        {
-            Repaint();
-        }
 
         private void OnDisable()
         {
@@ -695,7 +698,12 @@ namespace UnityEditor.CSV2UnityMesh
                 material.DisableKeyword("_NORMAL_DEBUG");
                 material.DisableKeyword("_TANGENT_DEBUG");
                 material.DisableKeyword("_VERTEX_COLOR_DEBUG");
-                material.DisableKeyword("_UV_DEBUG");
+                material.DisableKeyword("_TEXCOORD0_DEBUG");
+                material.DisableKeyword("_TEXCOORD1_DEBUG");
+                material.DisableKeyword("_TEXCOORD2_DEBUG");
+                material.DisableKeyword("_TEXCOORD3_DEBUG");
+                material.DisableKeyword("_TEXCOORD4_DEBUG");
+
 
                 switch (debugMode)
                 {
@@ -711,8 +719,20 @@ namespace UnityEditor.CSV2UnityMesh
                     case MaterialDebugMode.VertexColor:
                         material.EnableKeyword("_VERTEX_COLOR_DEBUG");
                         break;
-                    case MaterialDebugMode.UV:
-                        material.EnableKeyword("_UV_DEBUG");
+                    case MaterialDebugMode.Texcoord0:
+                        material.EnableKeyword("_TEXCOORD0_DEBUG");
+                        break;
+                    case MaterialDebugMode.Texcoord1:
+                        material.EnableKeyword("_TEXCOORD1_DEBUG");
+                        break;
+                    case MaterialDebugMode.Texcoord2:
+                        material.EnableKeyword("_TEXCOORD2_DEBUG");
+                        break;
+                    case MaterialDebugMode.Texcoord3:
+                        material.EnableKeyword("_TEXCOORD3_DEBUG");
+                        break;
+                    case MaterialDebugMode.Texcoord4:
+                        material.EnableKeyword("_TEXCOORD4_DEBUG");
                         break;
                     default:
                         break;

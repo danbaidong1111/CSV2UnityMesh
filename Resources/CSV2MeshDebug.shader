@@ -17,7 +17,7 @@ Shader "Hidden/CSV2MeshDebug"
             #pragma fragment frag
 
             // Define keywords for different debug modes
-            #pragma shader_feature _BASIC_LIGHTING _NORMAL_DEBUG _TANGENT_DEBUG _VERTEX_COLOR_DEBUG _UV_DEBUG
+            #pragma shader_feature _BASIC_LIGHTING _NORMAL_DEBUG _TANGENT_DEBUG _VERTEX_COLOR_DEBUG _TEXCOORD0_DEBUG _TEXCOORD1_DEBUG _TEXCOORD2_DEBUG _TEXCOORD3_DEBUG _TEXCOORD4_DEBUG
             #pragma shader_feature _ _OUTPUT_RED
             #pragma shader_feature _ _OUTPUT_GREEN
             #pragma shader_feature _ _OUTPUT_BLUE
@@ -28,19 +28,29 @@ Shader "Hidden/CSV2MeshDebug"
             struct appdata
             {
                 float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
+                
                 float3 normal : NORMAL;
                 float4 tangent : TANGENT;
                 float4 color : COLOR;
+                float4 texcoord0 : TEXCOORD0;
+                float4 texcoord1 : TEXCOORD1;
+                float4 texcoord2 : TEXCOORD2;
+                float4 texcoord3 : TEXCOORD3;
+                float4 texcoord4 : TEXCOORD4;
             };
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
-                float4 color : COLOR;
-                float3 worldNormal : TEXCOORD1;
-                float3 worldTangent : TEXCOORD2;
+                float4 texcoord0 : TEXCOORD0;
+                float4 texcoord1 : TEXCOORD1;
+                float4 texcoord2 : TEXCOORD2;
+                float4 texcoord3 : TEXCOORD3;
+                float4 texcoord4 : TEXCOORD4;
+                
+                float3 worldNormal : TEXCOORD5;
+                float3 worldTangent : TEXCOORD6;
                 float4 vertex : SV_POSITION;
+                float4 color : COLOR;
             };
 
             sampler2D _MainTex;
@@ -51,17 +61,22 @@ Shader "Hidden/CSV2MeshDebug"
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.worldTangent = v.tangent.xyz;
                 o.color = v.color;
+
+                o.texcoord0 = v.texcoord0;
+                o.texcoord1 = v.texcoord1;
+                o.texcoord2 = v.texcoord2;
+                o.texcoord3 = v.texcoord3;
+                o.texcoord4 = v.texcoord4;
 
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 col = tex2D(_MainTex, i.texcoord0.xy);
 
                 // Use shader feature to define behavior based on active keyword
                 #ifdef _BASIC_LIGHTING
@@ -89,9 +104,16 @@ Shader "Hidden/CSV2MeshDebug"
                     col.a = i.color.a;
                 #endif
 
-                #ifdef _UV_DEBUG
-                    // UV Debug
-                    col.rgb = float3(i.uv, 0); // Example: Display UV as color
+                #ifdef _TEXCOORD0_DEBUG
+                    col = i.texcoord0;
+                #elif _TEXCOORD1_DEBUG
+                    col = i.texcoord1;
+                #elif _TEXCOORD2_DEBUG
+                    col = i.texcoord2;
+                #elif _TEXCOORD3_DEBUG
+                    col = i.texcoord3;
+                #elif _TEXCOORD4_DEBUG
+                    col = i.texcoord4;
                 #endif
 
 
