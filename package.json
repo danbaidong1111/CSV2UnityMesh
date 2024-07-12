@@ -1,0 +1,11 @@
+{
+  "name": "com.danbaidong.csv2mesh",
+  "displayName": "CSV2UnityMesh",
+  "version": "1.0.0",
+  "unity": "2022.2",
+  "description": "Generate fbx from renderdoc csv data.",
+  "category": "Tools",
+  "dependencies": {
+    "com.unity.formats.fbx": "4.0.1"
+  }
+}
