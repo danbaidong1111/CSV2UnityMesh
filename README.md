@@ -2,6 +2,8 @@
 
 CSV2UnityMesh is a Unity package that allows you to convert CSV data into Unity meshes and FBX files. You can easily integrate it into your Unity project using the Unity Package Manager (UPM).
 
+Unity Version 2022.3+ (FBX Exporter 5.0+)
+
 ## Installation
 
 To install CSV2UnityMesh, follow these steps:
