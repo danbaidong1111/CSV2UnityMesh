@@ -30,6 +30,12 @@ namespace UnityEditor.CSV2UnityMesh
         public TextAsset m_csvAsset = null;
 
         
+        public static ExportFormat fbxExportFormat = ExportFormat.ASCII;
+        public static string[] fbxFormatDisplayedString =
+        {
+            "ASCII",
+            "Binary",
+        };
 
         private string m_outFilePath = "Assets/CSV2UnityMesh/";
         private string m_outFileName = "outfile.fbx";
@@ -229,6 +235,11 @@ namespace UnityEditor.CSV2UnityMesh
 
             #region SaveFileGUI
             GUILayout.FlexibleSpace();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(Styles.fbxFormatStr, EditorStyles.boldLabel, GUILayout.Width(80));
+            fbxExportFormat = (ExportFormat)EditorGUILayout.Popup((int)fbxExportFormat, fbxFormatDisplayedString, EditorStyles.popup, GUILayout.Width(200));
+            GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
 
@@ -547,7 +558,9 @@ namespace UnityEditor.CSV2UnityMesh
             //meshRenderer.sharedMaterial = material; // Use default Lit
 
             obj.name = fileName.Split('.')[0] + "Mesh";
-            ModelExporter.ExportObject(exportPath, obj);
+            ExportModelOptions exportModelOptions = new ExportModelOptions();
+            exportModelOptions.ExportFormat = fbxExportFormat;
+            ModelExporter.ExportObject(exportPath, obj, exportModelOptions);
             SaveMeshToAsset(mesh, filePath + fileName + "_fullData.mesh");
 
             // Clean
@@ -629,7 +642,7 @@ namespace UnityEditor.CSV2UnityMesh
             public static string colorStr = "Color:";
             public static string texcoordStr = "Texcoord";
 
-
+            public static string fbxFormatStr = "FBX format:";
             public static string materialDebugMode = "MaterialDebugMode:";
         }
 

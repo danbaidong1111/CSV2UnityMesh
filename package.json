@@ -6,6 +6,6 @@
   "description": "Generate fbx from renderdoc csv data.",
   "category": "Tools",
   "dependencies": {
-    "com.unity.formats.fbx": "4.0.1"
+    "com.unity.formats.fbx": "5.0.0"
   }
 }
